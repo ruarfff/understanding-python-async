@@ -4,8 +4,6 @@ import asyncio
 
 from fastapi import FastAPI
 from google.cloud import pubsub_v1
-from gcloud.aio.pubsub import SubscriberClient
-from gcloud.aio.pubsub import subscribe
 
 from colorama import Fore, Back
 
@@ -19,7 +17,7 @@ async def root():
         Back.GREEN + Fore.WHITE + f"Hello world started at: {start_time}.",
         flush=True,
     )
-    await asyncio.sleep(4)
+    #await asyncio.sleep(4)
     return {"message": "Hello World"}
 
 
@@ -105,43 +103,6 @@ def create_standard_subscription() -> None:
     print(f"Listening for messages on {subscription_path}..\n")
 
 
-async def create_aio_subscription():
-    async def handler(message):
-        print(message.data)
-        start_time = datetime.datetime.now()
-        if message.data.decode("utf-8") == "non-blocking":
-            print(
-                Back.BLUE
-                + Fore.WHITE
-                + f"Non blocking the event loop at: {start_time} for message {message.message_id}.",
-                flush=True,
-            )
-        elif message.data.decode("utf-8") == "blocking":
-            print(
-                Back.RED
-                + Fore.WHITE
-                + f"Blocking the event loop at: {start_time} for message {message.message_id}.",
-                flush=True,
-            )
-            # time.sleep(5)
-            await asyncio.sleep(5)
-
-    client = SubscriberClient()
-
-    try:
-        await client.create_subscription(
-            "projects/example-project/subscriptions/testing_aio_sub",
-            "projects/example-project/topics/testing_aio",
-        )
-    except:
-        print("Subscription already exists")
-
-    return await subscribe(
-        "projects/example-project/subscriptions/testing_aio_sub",
-        handler,
-        client,
-    )
 
 
 create_standard_subscription()
-await create_aio_subscription()
