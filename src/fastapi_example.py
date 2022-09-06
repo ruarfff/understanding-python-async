@@ -17,7 +17,7 @@ async def root():
         Back.GREEN + Fore.WHITE + f"Hello world started at: {start_time}.",
         flush=True,
     )
-    #await asyncio.sleep(4)
+    # await asyncio.sleep(4)
     return {"message": "Hello World"}
 
 
@@ -25,7 +25,7 @@ async def root():
 async def slow():
     start_time = datetime.datetime.now()
     print(
-        Back.GREEN + Fore.WHITE + f"Slow started at: {start_time}.",
+        Back.LIGHTMAGENTA_EX + Fore.WHITE + f"Slow started at: {start_time}.",
         flush=True,
     )
     time.sleep(4)
@@ -101,8 +101,6 @@ def create_standard_subscription() -> None:
 
     subscriber.subscribe(subscription_path, callback=callback)
     print(f"Listening for messages on {subscription_path}..\n")
-
-
 
 
 create_standard_subscription()

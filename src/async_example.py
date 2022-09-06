@@ -24,7 +24,9 @@ async def main():
         flush=True,
     )
 
-    print(Back.MAGENTA + Fore.WHITE + "Starting awaiting async functions.", flush=True)
+    print(
+        Back.MAGENTA + Fore.WHITE + "Starting awaiting async functions.", flush=True
+    )
 
     start_time = datetime.datetime.now()
 
