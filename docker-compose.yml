@@ -1,0 +1,20 @@
+services:
+  app:
+    build: .
+    depends_on:      
+      - pubsub
+    environment:
+      - PUBSUB_EMULATOR_HOST=pubsub:8681
+      - GOOGLE_PROJECT_ID=example-project      
+    volumes:
+      - ./:/usr/src/app
+    working_dir: /usr/src/app
+    ports:
+      - "8080:8080"
+
+  pubsub:
+    image: messagebird/gcloud-pubsub-emulator:latest
+    environment:
+      - PUBSUB_PROJECT=example_project
+    ports:
+      - "8681:8681"
